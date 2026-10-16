@@ -1,367 +1,182 @@
-<div align="center">
+\# Maharashtra Crime Intelligence Platform
 
-# 🚨 KSP Crime Intelligence Platform
 
-### AI-Powered Crime Analytics, Hotspot Detection & Explainable Risk Intelligence
 
-**Built for Karnataka State Police Datathon 2026 — Challenge 2**
+An intelligent crime analytics dashboard focused on Maharashtra, India, designed to support crime-data exploration, geographic analysis, hotspot identification, and data-driven insights.
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-2ca25f?style=for-the-badge)](https://project-rainfall-60078528363.development.catalystserverless.in/app/index.html)
-[![GitHub](https://img.shields.io/badge/Source-GitHub-181717?style=for-the-badge\&logo=github)](https://github.com/kkeerthanaaaa/KSP-Hackathon-Deploy)
-![Team](https://img.shields.io/badge/Team-Lalala-de2d26?style=for-the-badge)
 
-</div>
 
----
+\## Overview
 
-**Co-authored by: [Akash T](https://github.com/AkkashhT)**
 
----
 
-## 📌 Overview
+The Maharashtra Crime Intelligence Platform brings crime data and analytical tools together in one dashboard. It helps users explore crime trends, compare districts, identify patterns, and understand risk indicators through interactive visualizations.
 
-The **KSP Crime Intelligence Platform** is an AI-driven crime analytics and visualization system designed to help police teams move from **reactive policing to proactive, data-driven decision-making**.
 
-Instead of relying on disconnected spreadsheets and manual analysis, the platform combines:
 
-* 🗺️ Geospatial crime intelligence
-* 🔥 Hotspot & anomaly detection
-* 🕸️ Criminal network analysis
-* 🤖 Machine learning risk prediction
-* 🔍 Explainable AI using SHAP
-* 📊 Ground-truth model validation
+\## Key Features
 
-> **Turn raw crime records into actionable intelligence for officers and analysts.**
 
----
 
-## 🎯 The Problem
+\- \*\*Crime Analytics Dashboard:\*\* View crime statistics and explore incident trends.
 
-Crime records are often distributed across independent Excel-based datasets and jurisdictions, making it difficult to identify larger patterns.
+\- \*\*Geographic Analysis:\*\* Explore crime distribution across districts and locations.
 
-Key challenges include:
+\- \*\*Crime Hotspot Analysis:\*\* Identify areas with comparatively higher recorded incident counts.
 
-* Detecting emerging crime hotspots early
-* Identifying abnormal crime spikes
-* Discovering repeat offenders across stations
-* Understanding suspect–victim–station relationships
-* Forecasting station-level crime risk
-* Explaining why an area is classified as high-risk
+\- \*\*District Analytics:\*\* Compare available crime statistics across districts.
 
-Traditional reporting explains **what happened**.
+\- \*\*Criminal Network Analysis:\*\* Explore relationships represented in the available dataset.
 
-This platform focuses on:
+\- \*\*Risk Analysis:\*\* Examine model-based risk indicators and supporting analytical outputs.
 
-> **Where is crime increasing, who is connected, what patterns are emerging, and why is an area becoming risky?**
+\- \*\*Interactive Visualizations:\*\* Explore crime patterns through charts, graphs, and maps.
 
----
+\- \*\*Reports:\*\* Review and export supported analytical results.
 
-## 💡 The Solution
+\- \*\*AI Assistant:\*\* Ask natural-language questions about supported crime data and analytics.
 
-The platform combines three connected intelligence layers:
 
-| Intelligence Layer              | Capability                                                                            |
-| ------------------------------- | ------------------------------------------------------------------------------------- |
-| 🗺️ **Geospatial Intelligence** | Interactive crime maps, heatmaps, district drill-down and emerging red-zone detection |
-| 🕸️ **Network Intelligence**    | Suspect–victim–station relationship analysis and repeat-offender ring detection       |
-| 🔮 **Predictive Intelligence**  | Weekly station risk forecasting using XGBoost with SHAP explainability                |
 
-Together, these layers provide a unified crime intelligence system for both **station officers and state-level analysts**.
+\## Technology Stack
 
----
 
-## ✨ Key Features
 
-### 🗺️ Geospatial Crime Analytics
+\- \*\*Frontend:\*\* React, Vite, JavaScript, CSS
 
-Analyze crime geographically across districts and police stations.
+\- \*\*Backend:\*\* Python, FastAPI
 
-* Crime density and hotspot analysis
-* District → station drill-down
-* Crime-type filtering
-* Day vs night pattern analysis
-* Weekday vs weekend comparison
+\- \*\*Database:\*\* PostgreSQL
 
-### 🚨 Emerging Red-Zone Detection
+\- \*\*Data Analysis:\*\* Pandas, NumPy, Scikit-learn
 
-Uses **z-score-based statistical anomaly detection** to identify unusual recent increases in specific crime categories.
+\- \*\*Visualization:\*\* Interactive charts and geographic visualizations
 
-The system distinguishes between persistent hotspots and newly emerging crime spikes, allowing different patterns to be analyzed separately.
 
-### 🕸️ Criminal Network Analysis
 
-Analyzes relationships between:
+\## Data Sources
 
-* Suspects
-* Victims
-* Police stations
-* Modus operandi patterns
 
-MO similarity is calculated using **cosine-similarity clustering**, helping surface potential repeat-offender groups without manual cross-referencing.
 
-### 🔮 Explainable Crime Risk Prediction
-
-An **XGBoost model** predicts weekly station-level crime risk.
+The project includes historical district-wise crime statistics attributed to the National Crime Records Bureau (NCRB), covering 2001–2012, along with incident-level records generated for application testing and analysis.
 
-Instead of providing only a black-box risk score, **SHAP explanations** identify the factors contributing to each prediction.
 
-This helps answer:
 
-> **Why is this station considered high-risk?**
+Historical statistics and simulated incident records are different data sources and should be interpreted separately. Simulated records must not be treated as verified real-world incidents.
 
----
 
-## 🏗️ System Architecture
 
-```text
-Crime Records
-      │
-      ▼
-Data Processing & Feature Engineering
-      │
-      ├──────────────┬───────────────┐
-      ▼              ▼               ▼
- Geospatial       Network         ML Risk
- Analytics        Analysis        Prediction
-      │              │               │
-   PostGIS      MO Similarity    XGBoost + SHAP
-      │              │               │
-      └──────────────┴───────────────┘
-                     │
-                     ▼
-               FastAPI Backend
-                     │
-                     ▼
-               React Dashboard
-```
+See \[DATASET\_SOURCE.md](DATASET\_SOURCE.md) for dataset details and source information.
 
----
 
-## 🧠 Machine Learning Pipeline
 
-```text
-Historical Crime Data
-        │
-        ▼
-Feature Engineering
-        │
-        ▼
-Chronological Train/Test Split
-        │
-        ▼
-XGBoost Regression
-        │
-        ▼
-Weekly Risk Prediction
-        │
-        ▼
-SHAP Explainability
-        │
-        ▼
-Ground-Truth Validation
-```
+\## Running the Project
 
-A chronological train/test split is used instead of a random split to reduce **future-information leakage**.
 
----
 
-## 🧪 Validation & Model Rigor
+\### Prerequisites
 
-The synthetic dataset contains **7 deliberately injected crime patterns**, allowing the analytics and ML components to be tested against known ground truth.
 
-| Validation                      | Result                                                              |
-| ------------------------------- | ------------------------------------------------------------------- |
-| **Risk Prediction**             | Test MAE **5.00** vs naive baseline **6.66**                        |
-| **Feature Importance**          | Seasonal + hotspot signals correctly ranked as strongest predictors |
-| **Burglary Night Pattern**      | Observed **2.28×** vs injected **2.2×**                             |
-| **Vehicle Theft Night Pattern** | Observed **1.89×** vs injected **1.9×**                             |
-| **Robbery Night Pattern**       | Observed **1.5×** vs injected **1.5×**                              |
-| **MO Ring Detection**           | Correctly identified all **5 injected repeat offenders**            |
-| **Red-Zone Detection**          | Correctly isolated the injected recent crime spike                  |
 
-### Validation-Driven Improvements
+\- Python
 
-The validation process also identified two implementation issues:
+\- Node.js and npm
 
-1. **Night-time crime multiplier logic** — crime-specific night multipliers were not correctly connected to the hour-assignment logic. The issue was identified through unexpectedly similar observed ratios and corrected.
+\- PostgreSQL
 
-2. **Red-zone baseline logic** — the original detector allowed recent spike weeks to influence their own baseline. This was corrected by comparing a recent window against a clean earlier baseline.
 
-This validation-first approach ensures that the platform's analytical claims are **tested rather than simply visualized**.
 
----
+\### Backend
 
-## 🧰 Tech Stack
 
-**Frontend**
 
-* React
-* Vite
-* React Leaflet
-* React Force Graph 2D
-* Recharts
+Configure the database connection using your local environment settings and ensure the required database and tables are available.
 
-**Backend**
 
-* Python
-* FastAPI
-* Uvicorn
 
-**AI / Machine Learning**
+From the project root, activate your existing Python virtual environment if needed, then run:
 
-* XGBoost
-* SHAP
-* Scikit-learn
-* Pandas
-* NumPy
 
-**Database & Geospatial**
-
-* PostgreSQL
-* PostGIS
-* Supabase
-
-**Deployment**
-
-* Zoho Catalyst
-* Catalyst AppSail
-* Docker
-
----
-
-## 🚀 Run Locally
-
-### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/kkeerthanaaaa/KSP-Hackathon-Deploy.git
-cd KSP-Hackathon-Deploy
-```
 
-### 2. Setup PostgreSQL
-
-PostgreSQL 14+ with PostGIS is required.
-
-```bash
-createdb ksp_crime
-psql -U postgres -d ksp_crime -f backend/schema.sql
-```
-
-### 3. Setup Backend
-
-```bash
 cd backend
-python -m venv venv
+
+python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
+
 ```
 
-**Windows**
+
+
+\### Frontend
+
+
+
+Open a separate terminal:
+
+
 
 ```bash
-venv\Scripts\activate
-```
 
-**Linux / macOS**
-
-```bash
-source venv/bin/activate
-```
-
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-Generate synthetic crime data:
-
-```bash
-python generate_data.py
-```
-
-Start FastAPI:
-
-```bash
-uvicorn main:app --reload --port 8000
-```
-
-### 4. Setup Frontend
-
-```bash
 cd frontend
+
 npm install
+
 npm run dev
+
 ```
 
-Open:
 
-```text
-http://localhost:5173
-```
 
----
+Open the local URL displayed by Vite in your terminal.
 
-## ☁️ Deployment
 
-```text
-React Frontend
-      │
-      ▼
-Zoho Catalyst Client
-      │
-      ▼
-FastAPI Backend
-      │
-      ▼
-Catalyst AppSail
-      │
-      ▼
-Supabase PostgreSQL + PostGIS
-```
 
-PostgreSQL is hosted externally using **Supabase** because Catalyst's native Data Store does not provide the PostGIS capabilities required by the geospatial analytics layer.
+\*\*Note:\*\* Follow the project's database configuration and dependency requirements before starting the application. The dashboard requires a working backend and database for data-dependent features.
 
----
 
-## 🔭 Future Scope
 
-* Real CCTNS/FIR data ingestion
-* NLP extraction from FIR narrative text
-* Production authentication and role-based access control
-* Real-time crime hotspot monitoring
-* Socio-economic and demographic overlays
-* Crime-type-specific forecasting
-* Mobile interface for field officers
-* Automated anomaly alerts
-* English + Kannada multilingual support
+\## Project Objective
 
----
 
-## 👥 Team
 
-### Team Lalala
+The objective is to apply data warehousing, data analysis, visualization, and analytical techniques to crime-related data, making trends and geographic patterns easier to explore.
 
-**Keerthana K**
 
-**[Akash T](https://github.com/AkkashhT)**
 
----
+\## Limitations
 
-## 🔗 Project Links
 
-**Live Demo:**
-[Launch KSP Crime Intelligence Platform](https://project-rainfall-60078528363.development.catalystserverless.in/app/index.html)
 
-**Source Code:**
-[GitHub Repository](https://github.com/kkeerthanaaaa/KSP-Hackathon-Deploy)
+\- Historical statistics and simulated incident records have different coverage and meanings.
 
----
+\- Analytical outputs depend on data quality and model assumptions.
 
-<div align="center">
+\- Risk indicators and hotspot visualizations are analytical aids, not proof of criminal activity.
 
-### 🚨 From Crime Records → Crime Intelligence
 
-Built for **Karnataka State Police Datathon 2026 — Challenge 2**
 
-**AI-Driven Crime Analytics & Visualization Platform**
+\## Future Scope
 
-</div>
+
+
+\- Integrate additional verified Maharashtra-specific datasets.
+
+\- Improve district-level comparisons and geographic coverage.
+
+\- Enhance model evaluation and explainability.
+
+\- Expand reporting and analytical capabilities.
+
+
+
+\---
+
+
+
+\*\*Project:\*\* Maharashtra Crime Intelligence Platform  
+
+\*\*Purpose:\*\* Crime-data analytics and visualization for Maharashtra, India
+
+
+
