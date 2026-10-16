@@ -5,9 +5,11 @@ import Header from "./components/Header";
 import OverviewView from "./components/OverviewView";
 import GeographicView from "./components/GeographicView";
 import CrimeIntelligenceView from "./components/CrimeIntelligenceView";
+import DistrictAnalyticsView from "./components/DistrictAnalyticsView";
 import RiskDashboard from "./components/RiskDashboard";
 import NetworkGraph from "./components/NetworkGraph";
 import ReportsView from "./components/ReportsView";
+import AiAssistantView from "./components/AiAssistantView";
 
 const OFFICER_ASSIGNED_DISTRICT = "Pune";
 
@@ -33,6 +35,24 @@ export default function App() {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const handleAssistantNavigate = (tab, params = {}) => {
+    if (params.district) {
+      setSelectedDistrict(params.district);
+    }
+    if (params.crimeType) {
+      setCrimeTypeFilter(params.crimeType);
+    }
+    if (params.timeOfDay) {
+      setTimeOfDay(params.timeOfDay);
+    }
+    if (params.viewMode) {
+      setViewMode(params.viewMode);
+    }
+    if (tab) {
+      setActiveTab(tab);
+    }
+  };
 
   // Initial load: districts, crime types, red-zones, and station stats
   useEffect(() => {
@@ -127,7 +147,12 @@ export default function App() {
           />
         )}
 
-        {/* 3. Geographic Analysis */}
+        {/* 3. District Analytics (Comparison & Ranking) */}
+        {activeTab === "districtAnalytics" && (
+          <DistrictAnalyticsView defaultDistrict={selectedDistrict || "Pune"} />
+        )}
+
+        {/* 4. Geographic Analysis */}
         {activeTab === "geographic" && (
           <GeographicView
             stations={stations}
@@ -151,10 +176,10 @@ export default function App() {
           />
         )}
 
-        {/* 4. Risk & Prediction (ML) */}
+        {/* 5. Risk & Prediction (ML) */}
         {activeTab === "risk" && <RiskDashboard />}
 
-        {/* 5. Criminal Network Analysis */}
+        {/* 6. Criminal Network Analysis */}
         {activeTab === "network" && (
           <NetworkGraph
             topN={networkTopN}
@@ -167,13 +192,22 @@ export default function App() {
           />
         )}
 
-        {/* 6. Intelligence Reports */}
+        {/* 7. Intelligence Reports */}
         {activeTab === "reports" && (
           <ReportsView
             stations={stations}
             districts={districts}
             crimeTypes={crimeTypes}
             redzones={redzones}
+          />
+        )}
+
+        {/* 8. AI Crime Intelligence Assistant */}
+        {activeTab === "aiAssistant" && (
+          <AiAssistantView
+            onNavigate={handleAssistantNavigate}
+            role={role}
+            assignedDistrict={OFFICER_ASSIGNED_DISTRICT}
           />
         )}
       </main>

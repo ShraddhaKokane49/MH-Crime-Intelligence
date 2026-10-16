@@ -74,6 +74,10 @@ export default function GeographicView({
         <div className="sidebar-section-title">
           <span className="icon">❖</span> GEOSPATIAL FILTER CONTROLS
         </div>
+        <div style={{ fontSize: "10.5px", padding: "3px 8px", background: "rgba(6, 182, 212, 0.12)", border: "1px solid rgba(6, 182, 212, 0.3)", borderRadius: "4px", color: "var(--accent-cyan)", marginBottom: "10px", display: "inline-flex", alignItems: "center", gap: "6px" }}>
+          <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--accent-cyan)" }}></span>
+          STATION SIMULATION BENCHMARK (83 PS)
+        </div>
 
         {/* View Mode Toggle */}
         <div className="filter-group">
@@ -211,8 +215,8 @@ export default function GeographicView({
           zoomControl={true}
         >
           <TileLayer
-            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-            attribution="&copy; OpenStreetMap, CARTO"
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
           <FlyToBounds bounds={flyBounds} />
 

@@ -4,6 +4,7 @@ import os
 # Prepend the directory containing this script to sys.path
 # This ensures Python imports our bundled Linux dependencies first
 current_dir = os.path.dirname(os.path.abspath(__file__))
+os.chdir(current_dir)
 sys.path.insert(0, current_dir)
 
 # Run precomputation if the precomputed JSON files do not exist

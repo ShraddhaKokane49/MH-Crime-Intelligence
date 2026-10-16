@@ -169,6 +169,10 @@ export default function NetworkGraph({ topN, maxIncidentsPerSuspect, district, d
         <div className="sidebar-section-title">
           <span className="icon">☊</span> NETWORK GRAPH CONTROLS
         </div>
+        <div style={{ fontSize: "10.5px", padding: "3px 8px", background: "rgba(6, 182, 212, 0.12)", border: "1px solid rgba(6, 182, 212, 0.3)", borderRadius: "4px", color: "var(--accent-cyan)", marginBottom: "10px", display: "inline-flex", alignItems: "center", gap: "6px" }}>
+          <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--accent-cyan)" }}></span>
+          SIMULATION BENCHMARK GRAPH
+        </div>
 
         {/* District Filter */}
         <div className="filter-group">
@@ -260,6 +264,9 @@ export default function NetworkGraph({ topN, maxIncidentsPerSuspect, district, d
                 </div>
               );
             })}
+          </div>
+          <div style={{ fontSize: "10px", color: "#64748b", marginTop: "14px", borderTop: "1px solid #1e293b", paddingTop: "10px", lineHeight: 1.4 }}>
+            Notice: Offender and victim nodes represent the high-resolution simulation benchmark (public NCRB releases omit individual suspects and victims under privacy laws).
           </div>
         </div>
       </aside>

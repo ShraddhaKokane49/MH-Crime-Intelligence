@@ -73,6 +73,10 @@ export default function RiskDashboard() {
         <div className="sidebar-section-title">
           <span className="icon">▲</span> ML STATION RISK FORECAST
         </div>
+        <div style={{ fontSize: "10.5px", padding: "3px 8px", background: "rgba(6, 182, 212, 0.12)", border: "1px solid rgba(6, 182, 212, 0.3)", borderRadius: "4px", color: "var(--accent-cyan)", marginBottom: "10px", display: "inline-flex", alignItems: "center", gap: "6px" }}>
+          <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--accent-cyan)" }}></span>
+          SIMULATION BENCHMARK MODEL
+        </div>
 
         <div className="risk-search-box">
           <input

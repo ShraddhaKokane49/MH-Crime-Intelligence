@@ -18,8 +18,6 @@ from collections import defaultdict
 
 import numpy as np
 import psycopg2.extras
-from sklearn.cluster import AgglomerativeClustering
-from sklearn.metrics.pairwise import cosine_similarity
 
 WEAPONS = ["None", "Knife", "Blunt Object", "Firearm", "Improvised"]
 TARGETS = ["Residence", "Commercial", "Vehicle", "Individual", "Public Space"]
@@ -39,6 +37,61 @@ def _build_feature_vector(records):
         is_night = 1 if (r["hour"] >= 22 or r["hour"] < 5) else 0
         vec[len(WEAPONS) + len(TARGETS) + len(ESCAPES) + is_night] += 1
     return vec / len(records)
+
+
+def _agglomerative_average_linkage(dist_matrix, distance_threshold):
+    """Pure NumPy average-linkage hierarchical agglomerative clustering."""
+    n = dist_matrix.shape[0]
+    clusters = {i: [i] for i in range(n)}
+    active = list(range(n))
+    next_cluster_id = n
+
+    pair_dist = {}
+    for i in range(n):
+        for j in range(i + 1, n):
+            pair_dist[(i, j)] = dist_matrix[i, j]
+
+    while len(active) > 1:
+        min_d = float("inf")
+        best_pair = None
+        for i_idx in range(len(active)):
+            ci = active[i_idx]
+            for j_idx in range(i_idx + 1, len(active)):
+                cj = active[j_idx]
+                key = (min(ci, cj), max(ci, cj))
+                d = pair_dist[key]
+                if d < min_d:
+                    min_d = d
+                    best_pair = (ci, cj)
+
+        if min_d > distance_threshold or best_pair is None:
+            break
+
+        c1, c2 = best_pair
+        members1 = clusters[c1]
+        members2 = clusters[c2]
+        new_members = members1 + members2
+        new_cid = next_cluster_id
+        next_cluster_id += 1
+
+        clusters[new_cid] = new_members
+        active.remove(c1)
+        active.remove(c2)
+
+        for other in active:
+            other_members = clusters[other]
+            sub_dists = [dist_matrix[a, b] for a in new_members for b in other_members]
+            avg_d = sum(sub_dists) / len(sub_dists)
+            pair_dist[(min(new_cid, other), max(new_cid, other))] = avg_d
+
+        active.append(new_cid)
+
+    labels = np.zeros(n, dtype=int)
+    for label_idx, cid in enumerate(active):
+        for member in clusters[cid]:
+            labels[member] = label_idx
+
+    return labels
 
 
 def compute_mo_clusters(conn, min_incidents=1):
@@ -65,15 +118,14 @@ def compute_mo_clusters(conn, min_incidents=1):
 
     vectors = np.array([_build_feature_vector(by_suspect[sid]) for sid in suspect_ids])
 
-    similarity = cosine_similarity(vectors)
-    distance = np.clip(1 - similarity, 0, None)
-    np.fill_diagonal(distance, 0)
+    norms = np.linalg.norm(vectors, axis=1, keepdims=True)
+    norms[norms == 0] = 1e-9
+    normalized = vectors / norms
+    similarity = np.dot(normalized, normalized.T)
+    distance = np.clip(1.0 - similarity, 0.0, None)
+    np.fill_diagonal(distance, 0.0)
 
-    model = AgglomerativeClustering(
-        metric="precomputed", linkage="average",
-        distance_threshold=DISTANCE_THRESHOLD, n_clusters=None,
-    )
-    labels = model.fit_predict(distance)
+    labels = _agglomerative_average_linkage(distance, DISTANCE_THRESHOLD)
 
     result = {}
     for sid, label in zip(suspect_ids, labels):

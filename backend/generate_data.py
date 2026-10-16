@@ -31,6 +31,9 @@ fake = Faker("en_IN")
 random.seed(42)
 np.random.seed(42)
 
+from dotenv import load_dotenv
+load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
+
 db_password = os.environ.get("DB_PASSWORD")
 if not db_password:
     raise RuntimeError("DB_PASSWORD environment variable is required")

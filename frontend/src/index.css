@@ -1,35 +1,65 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
-  --bg-darkest: #07090e;
-  --bg-base: #0b0e17;
-  --bg-surface: #111624;
-  --bg-panel: #151b2c;
-  --bg-card: #182033;
-  --bg-card-hover: #1e2840;
+  /* =========================================================================
+     MAHARASHTRA CRIME INTELLIGENCE GLOBAL PALETTE (Darkest Navy-Blue Theme)
+     Palette tokens:
+     - Main background: #061A33
+     - Secondary background: #082448
+     - Card background: #0A2A50
+     - Header background: #0D315C
+     - Borders: #174675
+     - Primary cyan: #20C8F4
+     - Orange highlights: #FF8A24
+     - Purple: #9257F6
+     - Blue: #3987F5
+     - Red: #F0444D
+     - Main text: #F4F8FF
+     - Muted text: #A7C0DF
+     ========================================================================= */
+  --bg-main: #061A33;
+  --bg-secondary: #082448;
+  --bg-card: #0A2A50;
+  --bg-card-hover: #0E3663;
+  --bg-header: #0D315C;
+  --borders: #174675;
 
-  --border-subtle: #1c2438;
-  --border-medium: #27344f;
-  --border-active: #f97316;
+  --primary-cyan: #20C8F4;
+  --orange-highlight: #FF8A24;
+  --purple: #9257F6;
+  --blue: #3987F5;
+  --red: #F0444D;
+
+  --main-text: #F4F8FF;
+  --muted-text: #A7C0DF;
+
+  /* Seamless Aliases for existing components */
+  --bg-darkest: var(--bg-main);
+  --bg-base: var(--bg-main);
+  --bg-surface: var(--bg-secondary);
+  --bg-panel: var(--bg-card);
+
+  --border-subtle: var(--borders);
+  --border-medium: var(--borders);
+  --border-active: var(--primary-cyan);
 
   --text-white: #ffffff;
-  --text-primary: #f1f5f9;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-  --text-dim: #475569;
+  --text-primary: var(--main-text);
+  --text-secondary: var(--muted-text);
+  --text-muted: var(--muted-text);
+  --text-dim: #7B9ABF;
 
-  --saffron: #f97316;
-  --saffron-bright: #fb923c;
-  --saffron-dark: #ea580c;
-  --saffron-glow: rgba(249, 115, 22, 0.18);
+  --saffron: var(--orange-highlight);
+  --saffron-bright: #FFA44F;
+  --saffron-dark: #E07010;
+  --saffron-glow: rgba(255, 138, 36, 0.22);
 
-  --crimson: #ef4444;
-  --crimson-glow: rgba(239, 68, 68, 0.2);
-  --amber: #f59e0b;
-  --emerald: #10b981;
-  --cyan: #06b6d4;
-  --blue: #3b82f6;
-  --indigo: #6366f1;
+  --crimson: var(--red);
+  --crimson-glow: rgba(240, 68, 77, 0.25);
+  --amber: #FFB020;
+  --emerald: #10B981;
+  --cyan: var(--primary-cyan);
+  --indigo: var(--purple);
 
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', 'Consolas', monospace;
@@ -39,10 +69,10 @@
   --radius-lg: 8px;
   --radius-xl: 12px;
 
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.6);
-  --shadow-glow: 0 0 15px rgba(249, 115, 22, 0.25);
+  --shadow-sm: 0 1px 3px rgba(3, 12, 24, 0.5);
+  --shadow-md: 0 4px 12px rgba(3, 12, 24, 0.6);
+  --shadow-lg: 0 10px 25px rgba(3, 12, 24, 0.7);
+  --shadow-glow: 0 0 15px rgba(32, 200, 244, 0.25);
 }
 
 * {

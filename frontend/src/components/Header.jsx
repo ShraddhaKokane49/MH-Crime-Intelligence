@@ -28,11 +28,57 @@ export default function Header({ activeTab, setActiveTab, role, setRole, assigne
   const navItems = [
     { id: "overview", label: "Command Overview", icon: "⎈" },
     { id: "intelligence", label: "Crime Intelligence", icon: "◈" },
+    { id: "districtAnalytics", label: "District Analytics", icon: "⚖" },
     { id: "geographic", label: "Geographic Analysis", icon: "❖" },
     { id: "risk", label: "Risk & Prediction", icon: "▲" },
     { id: "network", label: "Criminal Network", icon: "☊" },
     { id: "reports", label: "Intelligence Reports", icon: "▤" },
+    { id: "aiAssistant", label: "AI Intelligence", icon: "🤖" },
   ];
+
+  const getSourceStatus = () => {
+    switch (activeTab) {
+      case "districtAnalytics":
+        return {
+          label: "DATA MODE: HYBRID — NCRB REAL DATA (2001–2012) + SIMULATION",
+          tooltip: "District Analytics supports dual querying: Official NCRB 2001-2012 records (552 rows) and Synthetic FIR simulation",
+          dotClass: "hybrid-dot",
+          pillClass: "hybrid-pill",
+        };
+      case "geographic":
+      case "risk":
+      case "network":
+        return {
+          label: "DATA MODE: SIMULATION — SYNTHETIC FIR & ML BENCHMARK",
+          tooltip: "Geographic catchments, XGBoost Risk, and Network models utilize synthetic high-frequency FIR & suspect graphs (90,305 incidents)",
+          dotClass: "sim-dot",
+          pillClass: "sim-pill",
+        };
+      case "reports":
+        return {
+          label: "DATA MODE: HYBRID — NCRB OFFICIAL DOSSIERS + SIMULATION",
+          tooltip: "Generates intelligence reports combining official NCRB district data with simulated operational profiles",
+          dotClass: "hybrid-dot",
+          pillClass: "hybrid-pill",
+        };
+      case "aiAssistant":
+        return {
+          label: "DATA MODE: HYBRID — NCRB REAL DATA + SIMULATION QA",
+          tooltip: "AI Assistant routes district statistics to authentic NCRB tables and tactical forecasts to simulation",
+          dotClass: "hybrid-dot",
+          pillClass: "hybrid-pill",
+        };
+      default:
+        return {
+          label: "DATA MODE: HYBRID — NCRB REAL DATA + SIMULATION",
+          tooltip: "Hybrid Architecture: Authentic NCRB 2001–2012 district statistics integrated alongside synthetic tactical FIR simulation",
+          dotClass: "hybrid-dot",
+          pillClass: "hybrid-pill",
+        };
+    }
+  };
+
+  const sourceStatus = getSourceStatus();
 
   return (
     <header className="ops-header">
@@ -53,9 +99,9 @@ export default function Header({ activeTab, setActiveTab, role, setRole, assigne
         </div>
 
         <div className="header-meta">
-          <div className="synthetic-data-pill" title="This platform runs on realistic synthetic crime data generated for demonstration">
-            <span className="pill-dot"></span>
-            SYNTHETIC DEMO DATASET
+          <div className={`synthetic-data-pill ${sourceStatus.pillClass}`} title={sourceStatus.tooltip}>
+            <span className={`pill-dot ${sourceStatus.dotClass}`}></span>
+            {sourceStatus.label}
           </div>
 
           <div className="live-status-pill">
@@ -106,6 +152,7 @@ export default function Header({ activeTab, setActiveTab, role, setRole, assigne
                 <span className="nav-tab-label">{item.label}</span>
                 {item.id === "risk" && <span className="nav-badge ml-badge">ML</span>}
                 {item.id === "network" && <span className="nav-badge network-badge">GRAPH</span>}
+                {item.id === "aiAssistant" && <span className="nav-badge ai-badge">NLP</span>}
               </button>
             );
           })}
